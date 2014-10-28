@@ -13,7 +13,7 @@ var score, txtScore, timer, time, txtTime, platforms, dude, jump, dead;
   function create(){
     score = 0, time = 120;
 
-    game.add.tileSprite(0,0, 200, 40, 'background');
+    game.add.tileSprite(0, 0, 200, 40, 'background');
     txtScore = game.add.text(20, 20, "0",   { font: "30px Arial", fill: "#ffffff" });
     txtTime  = game.add.text(740, 20, time, { font: "30px Arial", fill: "#ffffff" });
     timer = game.time.events.loop(1000, subtractTime);
