@@ -1,8 +1,7 @@
 var menu = (function(){
   var o = {
     preload: preload,
-    create: create,
-    update: update
+    create: create
   };
 
   function preload(){
@@ -20,7 +19,7 @@ var menu = (function(){
   }
 
   function start(){
-    game.state.start('level1');
+    game.state.start('lvl1');
   }
 
   return o;
