@@ -87,29 +87,26 @@
 
     arrows.forEachAlive(function(shot){
       distanceFromPlayer = 600;
-      if(Math.abs(player.x - shot.x)  >= distanceFromPlayer){
+      if(Math.abs(player.x - shot.x) >= distanceFromPlayer){
         shot.kill();
       }
     }, this);
 
     if(cursors.left.isDown){
       player.body.velocity.x = -250;
-      player.animations.play('left');
+      if(!isShooting){player.animations.play('left');}
     }else if(cursors.right.isDown){
       player.body.velocity.x = 250;
-      player.animations.play('right');
-
+      if(!isShooting){player.animations.play('right');}
     }else{
       player.body.velocity.x = 0;
       if(!isShooting){
         player.animations.stop();
         player.frame = 130;
-        //player.animations.play('shootLeft');
       }
     }
     if(cursors.up.isDown && player.body.onFloor()){
       player.body.velocity.y = -400;
-      //player.animations.play('shootLeft');
     }
 
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
