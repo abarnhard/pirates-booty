@@ -1,5 +1,5 @@
 (function(){
-  game.state.add('lvl1', {create:create, update:update});
+  game.state.add('lvl1', {create:create, update:update, render:render});
 
   var score, map, tileset, layer, cursor, player;
 
@@ -9,10 +9,9 @@
     game.stage.backgroundColor = '#6686ff';
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
-    map.setCollisionBetween(39, 44);
-    map.addTilesetImage('world', 'tiles2');
-    map.setCollisionBetween(111, 156);
-    layer = map.createLayer('WorldTest');
+    map.setCollisionBetween(23, 44);
+    layer = map.createLayer('Tile Layer 1');
+    layer.enableBody = true;
     layer.resizeWorld();
 
     player = game.add.sprite(20, 200, 'hero');
@@ -21,7 +20,7 @@
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
-    player.anchor.set(0.5, 0.5);
+    // player.anchor.set(0.5, 0.5);
     player.body.gravity.y = 250;
     player.body.setSize(32, 50, 0, 5);
     player.body.bounce.y=0.2;
@@ -44,13 +43,19 @@
       player.animations.play('right');
     }else{
       player.body.velocity.x = 0;
-      player.animations.play('still');
+      player.animations.stop();
+      player.frame = 130;
+      // player.animations.play('still');
     }
-
+    console.log(player.body.touching.down);
     if(cursors.up.isDown && player.body.touching.down){
       player.body.velocity.y = -350;
     }
   }
 
+  function render(){
+    game.debug.body(player);
+    game.debug.body(layer);
 
+  }
 })();
