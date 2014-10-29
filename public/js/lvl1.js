@@ -46,15 +46,9 @@
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.anchor.set(0.5, 0.5);
     player.body.collideWorldBounds = true;
-<<<<<<< HEAD
     player.body.gravity.y = 450;
     player.body.setSize(32, 50, 0, 5);
     player.body.bounce.y = 0.3;
-=======
-    player.body.gravity.y = 300;
-    player.body.setSize(16, 50, 0, 5);
-    player.body.bounce.y = 0.1;
->>>>>>> 08fb12e88a633253220b59db65de7f1a0096e1d8
     player.body.linearDamping = 1;
 
     game.camera.follow(player);
@@ -65,15 +59,9 @@
 
     coins = game.add.group();
     coins.enableBody = true;
-<<<<<<< HEAD
     for(var i = 0; i < 12; i++){
       var coin = coins.create(i * 100, 0, 'coin');
       coin.body.gravity.y = 450;
-=======
-    for(var i = 0; i < 100; i++){
-      var coin = coins.create(i * 100+40, 0, 'coin');
-      coin.body.gravity.y = 400;
->>>>>>> 08fb12e88a633253220b59db65de7f1a0096e1d8
       coin.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
 
