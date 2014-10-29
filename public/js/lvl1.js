@@ -73,10 +73,6 @@
     scoreText = game.add.text(game.camera.x, game.camera.y, 'score: 0', { fontSize: '32px', fill: '#000', align: 'center' });
   }
 
-  function updateText(){
-    scoreText.setText("Score: " +score);
-  }
-
   function update(){
     scoreText.x=game.camera.x;
     scoreText.y=game.camera.y;
@@ -88,7 +84,12 @@
     game.physics.arcade.overlap(arrows, ladyPirates, killNpc, null, this);
     game.physics.arcade.overlap(player, coins, collectCoin, null, this);
 
-
+    arrows.forEachAlive(function(shot){
+      widthOfScreen = 800;
+      if(Math.abs(player.x - shot.x)  >= widthOfScreen){
+        shot.kill();
+      }
+    }, this);
 
     if(cursors.left.isDown){
       player.body.velocity.x = -150;
@@ -104,7 +105,6 @@
         //player.animations.play('shootLeft');
       }
     }
-
     if(cursors.up.isDown && player.body.onFloor()){
       player.body.velocity.y = -350;
       //player.animations.play('shootLeft');
@@ -156,6 +156,10 @@
   function killNpc(shot, npc){
     shot.kill();
     npc.kill();
+  }
+
+  function updateText(){
+    scoreText.setText("Score: " +score);
   }
 
 })();
