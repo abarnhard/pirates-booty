@@ -9,8 +9,9 @@
 
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
-    map.setCollisionBetween(1, 20);
-
+    map.setCollisionBetween(1, 18);
+    // map.setCollision(49);
+    map.setCollision(77);
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
@@ -109,6 +110,14 @@
       player.body.velocity.y = -350;
       //player.animations.play('shootLeft');
     }
+
+    if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
+      game.state.start('lvl2');
+    }
+    var screenHeight = 480;
+    if(player.y >= screenHeight - (tile * 3)){
+      // game.state.restart();
+    }
   }
 
   function collectCoin (player, coin) {
@@ -116,7 +125,6 @@
     score += 100;
     scoreText.text = 'Score: ' + score;
   }
-
 
   function render(){
     game.debug.body(player);
