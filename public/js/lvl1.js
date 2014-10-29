@@ -16,7 +16,7 @@
 
     ladyPirates = game.add.group();
     ladyPirates.enableBody = true;
-    ladyPirates.createMultiple(10, 'ladyPirate');
+    ladyPirates.createMultiple(2, 'ladyPirate');
     ladyPirates.forEach(function(lp){
       lp.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
       lp.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
@@ -30,8 +30,46 @@
     ladyPirates.setAll('body.bounce.y', 0.1);
     ladyPirates.setAll('body.linearDamping', 1);
 
-    ladyPirate = ladyPirates.getFirstDead();
-    ladyPirate.reset(40, 200);
+    var ladyPiratePosition = [944, 1456];
+    var counter=0;
+    ladyPirates.forEach(function(ladyPirate){
+      ladyPirate.reset(ladyPiratePosition[counter], 0);
+      counter++;
+     }, this);
+
+    skeletons = game.add.group();
+    skeletons.enableBody = true;
+    skeletons.createMultiple(2, 'skeleton');
+    skeletons.forEach(function(sk){
+      sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
+      sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
+      sk.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
+      game.physics.enable(sk, Phaser.Physics.ARCADE);
+      sk.anchor.set(0.5, 0.5);
+      sk.body.setSize(28, 50, 0, 5);
+    });
+    skeletons.setAll('body.collideWorldBounds', true);
+    skeletons.setAll('body.gravity.y', 400);
+    skeletons.setAll('body.bounce.y', 0.1);
+    skeletons.setAll('body.linearDamping', 1);
+
+    var skeletonPosition = [592, 1456];
+    var counter=0;
+    skeletons.forEach(function(skeleton){
+      skeleton.reset(skeletonPosition[counter], 0);
+      counter++;
+     }, this);
+
+
+
+
+
+
+
+
+
+
+
 
     player = game.add.sprite(20, 200, 'hero');
     player.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
@@ -80,6 +118,8 @@
     game.physics.arcade.collide(player, layer);
     player.body.velocity.x = 0;
     game.physics.arcade.collide(coins, layer);
+    game.physics.arcade.collide(ladyPirates, layer);
+    game.physics.arcade.collide(skeletons, layer);
     game.physics.arcade.overlap(arrows, layer, killShot, null, this);
     game.physics.arcade.overlap(arrows, ladyPirates, killNpc, null, this);
     game.physics.arcade.overlap(player, coins, collectCoin, null, this);
