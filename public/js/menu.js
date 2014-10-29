@@ -6,7 +6,7 @@
     game.load.tilemap('mario', '/assets/backgrounds/marioLevel1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles', '/assets/backgrounds/worldfinal.png');
     //CHARACTERS:
-    game.load.spritesheet('hero', 'assets/characters/hero/hero.png', 64, 64, 265);
+    game.load.spritesheet('hero', '/assets/characters/hero/hero.png', 64, 64, 265);
   }
 
   function create(){
