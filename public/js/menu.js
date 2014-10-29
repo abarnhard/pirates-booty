@@ -25,7 +25,7 @@ var button;
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     game.add.sprite(0, 0, 'menu');
-    button = game.add.button(game.world.centerX + 250, 275, 'start', startClick, this);
+    button = game.add.button(game.world.centerX + 280, 275, 'start', startClick, this);
     button.scale.setTo(.5);
 
     //game.add.tileSprite(0, 0, 800, 600, 'bg');
