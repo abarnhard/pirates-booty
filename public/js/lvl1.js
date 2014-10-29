@@ -48,7 +48,7 @@
     player.anchor.set(0.5, 0.5);
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 450;
-    player.body.setSize(32, 50, 0, 5);
+    player.body.setSize(18, 50, 0, 5);
     player.body.bounce.y = 0.3;
     player.body.linearDamping = 1;
 
