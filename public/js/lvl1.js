@@ -9,9 +9,17 @@
 
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
+<<<<<<< HEAD
     map.setCollisionBetween(1, 18);
     // map.setCollision(49);
     map.setCollision(77);
+=======
+    map.addTilesetImage('cloud1', 'cloud1');
+    map.addTilesetImage('cloud2', 'cloud2');
+    map.addTilesetImage('boatWater2', 'boat');
+    map.setCollisionBetween(1, 20);
+
+>>>>>>> sarahMenu
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
