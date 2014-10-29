@@ -9,6 +9,9 @@
 
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
+    map.addTilesetImage('cloud1', 'cloud1');
+    map.addTilesetImage('cloud2', 'cloud2');
+    map.addTilesetImage('boatWater2', 'boat');
     map.setCollisionBetween(1, 20);
 
     layer = map.createLayer('Tile Layer 1');
