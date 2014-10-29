@@ -9,8 +9,9 @@
 
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
-    map.setCollisionBetween(1, 20);
-
+    map.setCollisionBetween(1, 18);
+    // map.setCollision(49);
+    map.setCollision(77);
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
@@ -46,9 +47,9 @@
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.anchor.set(0.5, 0.5);
     player.body.collideWorldBounds = true;
-    player.body.gravity.y = 300;
-    player.body.setSize(16, 50, 0, 5);
-    player.body.bounce.y = 0.1;
+    player.body.gravity.y = 450;
+    player.body.setSize(18, 50, 0, 5);
+    player.body.bounce.y = 0.3;
     player.body.linearDamping = 1;
 
     game.camera.follow(player);
@@ -59,9 +60,9 @@
 
     coins = game.add.group();
     coins.enableBody = true;
-    for(var i = 0; i < 100; i++){
-      var coin = coins.create(i * 100+40, 0, 'coin');
-      coin.body.gravity.y = 400;
+    for(var i = 0; i < 12; i++){
+      var coin = coins.create(i * 100, 0, 'coin');
+      coin.body.gravity.y = 450;
       coin.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
 
@@ -86,28 +87,34 @@
 
     arrows.forEachAlive(function(shot){
       distanceFromPlayer = 600;
-      if(Math.abs(player.x - shot.x)  >= distanceFromPlayer){
+      if(Math.abs(player.x - shot.x) >= distanceFromPlayer){
         shot.kill();
       }
     }, this);
 
     if(cursors.left.isDown){
-      player.body.velocity.x = -150;
+      player.body.velocity.x = -250;
       if(!isShooting){player.animations.play('left');}
     }else if(cursors.right.isDown){
-      player.body.velocity.x = 150;
+      player.body.velocity.x = 250;
       if(!isShooting){player.animations.play('right');}
     }else{
       player.body.velocity.x = 0;
       if(!isShooting){
         player.animations.stop();
         player.frame = 130;
-        //player.animations.play('shootLeft');
       }
     }
     if(cursors.up.isDown && player.body.onFloor()){
-      player.body.velocity.y = -350;
-      //player.animations.play('shootLeft');
+      player.body.velocity.y = -400;
+    }
+
+    if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
+      game.state.start('lvl2');
+    }
+    var screenHeight = 480;
+    if(player.y >= screenHeight - (tile * 3)){
+      // game.state.restart();
     }
   }
 
@@ -116,7 +123,6 @@
     score += 100;
     scoreText.text = 'Score: ' + score;
   }
-
 
   function render(){
     game.debug.body(player);
