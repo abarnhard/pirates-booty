@@ -1,32 +1,28 @@
-var menu = (function(){
-  var o = {
-    preload: preload,
-    create: create,
-    update: update
-  };
-
-//var button;
+(function(){
+  game.state.add('menu', {preload:preload, create:create});
 
   function preload(){
-    game.load.image('bg', '/assets/background.png');
-    //game.load.spritesheet('button', '/assets/button_sprite_sheet.png', 193, 71);
-    game.load.spritesheet('button', '/assets/START3.png');
-
+    //game.load.image('background', '/assets/backgrounds/background.png');
+    game.load.tilemap('mario', '/assets/backgrounds/marioLevel1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('tiles', '/assets/backgrounds/worldfinal.png');
+    //CHARACTERS:
+    game.load.spritesheet('hero', 'assets/characters/hero/hero.png', 64, 64, 265);
   }
 
   function create(){
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    game.add.sprite('0', '0', 'bg');
-    button = game.add.button(game.world.centerX - 140, game.world.centerY - 140, 'button', startClick);
+    //game.add.tileSprite(0, 0, 800, 600, 'bg');
+    game.stage.backgroundColor = '#6686ff';
+
+    var text = game.add.text(game.world.centerX, game.world.centerY, 'Mario\nPress SPACE to Begin');
+    text.anchor.setTo(0.5);
+
+    var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceKey.onDown.add(start);
   }
 
-  function update(){
-
+  function start(){
+    game.state.start('lvl1');
   }
-
-  function startClick () {
-    this.game.state.start('lvl1');
-  }
-
-  return o;
 })();
