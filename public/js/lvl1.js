@@ -10,6 +10,7 @@
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
     map.setCollisionBetween(23, 44);
+
     layer = map.createLayer('Tile Layer 1');
     layer.enableBody = true;
     layer.resizeWorld();
