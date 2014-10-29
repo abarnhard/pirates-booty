@@ -13,6 +13,7 @@
     game.load.spritesheet('orc', 'assets/characters/caveDwellers/spearOrc.png', 64, 64, 265);
     //Other
     game.load.spritesheet('coin', 'assets/otherAnimations/coin.png', 32, 32);
+    game.load.spritesheet('arrow', 'assets/otherAnimations/arrow.png', 32, 32);
   }
 
   function create(){
