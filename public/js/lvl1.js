@@ -127,9 +127,6 @@
     var shot = arrows.getFirstDead(),
         offset = 15;
     if(!shot){return;}
-    shot.checkWorldBounds = true;
-    shot.outOfBoundsKill = true;
-
     if(cursors.left.isDown){
       isShooting = true;
       player.animations.play('shootLeft');
