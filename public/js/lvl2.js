@@ -6,6 +6,7 @@
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = null;
+//    game.add.tileSprite(0, 0, 800, 460, 'cave');
 
     map = game.add.tilemap('mario2');
     map.addTilesetImage('worldfinal', 'tiles');
