@@ -47,9 +47,9 @@
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.anchor.set(0.5, 0.5);
     player.body.collideWorldBounds = true;
-    player.body.gravity.y = 300;
-    player.body.setSize(16, 50, 0, 5);
-    player.body.bounce.y = 0.1;
+    player.body.gravity.y = 450;
+    player.body.setSize(32, 50, 0, 5);
+    player.body.bounce.y = 0.3;
     player.body.linearDamping = 1;
 
     game.camera.follow(player);
@@ -60,9 +60,9 @@
 
     coins = game.add.group();
     coins.enableBody = true;
-    for(var i = 0; i < 100; i++){
-      var coin = coins.create(i * 100+40, 0, 'coin');
-      coin.body.gravity.y = 400;
+    for(var i = 0; i < 12; i++){
+      var coin = coins.create(i * 100, 0, 'coin');
+      coin.body.gravity.y = 450;
       coin.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
 
@@ -93,11 +93,12 @@
     }, this);
 
     if(cursors.left.isDown){
-      player.body.velocity.x = -150;
-      if(!isShooting){player.animations.play('left');}
+      player.body.velocity.x = -250;
+      player.animations.play('left');
     }else if(cursors.right.isDown){
-      player.body.velocity.x = 150;
-      if(!isShooting){player.animations.play('right');}
+      player.body.velocity.x = 250;
+      player.animations.play('right');
+
     }else{
       player.body.velocity.x = 0;
       if(!isShooting){
@@ -107,7 +108,7 @@
       }
     }
     if(cursors.up.isDown && player.body.onFloor()){
-      player.body.velocity.y = -350;
+      player.body.velocity.y = -400;
       //player.animations.play('shootLeft');
     }
 
