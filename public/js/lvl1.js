@@ -1,7 +1,7 @@
 (function(){
   game.state.add('lvl1', {create:create, update:update});
 
-  var score, map, tileset, layer;
+  var score, map, tileset, layer, cursor, player;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -11,6 +11,7 @@
     map.addTilesetImage('worldfinal', 'tiles');
     map.setCollisionBetween(39, 44);
     layer = map.createLayer('Tile Layer 1');
+    layer.resizeWorld();
 
     player = game.add.sprite(20, 200, 'hero');
     player.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
@@ -18,9 +19,10 @@
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.anchor.set(0.5, 0.5);
-    player.body.gravity.y = 900;
+    player.body.gravity.y = 250;
     player.body.setSize(32, 50, 0, 5);
-    player.body.collideWorldBounds = true;
+    player.body.bounce.y=0.2;
+    player.body.linearDamping = 1;
     game.camera.follow(player);
     cursors = game.input.keyboard.createCursorKeys();
 
@@ -28,6 +30,7 @@
 
   function update(){
     game.physics.arcade.collide(player, layer);
+    player.body.velocity.x=0;
 
     if(cursors.left.isDown){
       player.body.velocity.x = -150;

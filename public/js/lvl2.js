@@ -1,4 +1,4 @@
-function(){
+/*function(){
   game.state.add('lvl2', {create:create, update:update});
 
   var score, map, tileset, layer;
@@ -48,3 +48,4 @@ function(){
 
 
 })();
+*/
