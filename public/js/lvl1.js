@@ -9,7 +9,7 @@
     game.stage.backgroundColor = '#6686ff';
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
-    map.setCollisionBetween(39, 44);
+    map.setCollisionBetween(30, 44);
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
