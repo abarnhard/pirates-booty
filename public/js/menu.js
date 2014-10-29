@@ -4,6 +4,7 @@
   function preload(){
     //game.load.image('background', '/assets/backgrounds/background.png');
     game.load.tilemap('mario', '/assets/backgrounds/marioLevel1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('mario2', '/assets/backgrounds/marioLevel2.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles', '/assets/backgrounds/worldfinal.png');
     //CHARACTERS:
     game.load.spritesheet('hero', 'assets/characters/hero/hero.png', 64, 64, 265);
@@ -23,9 +24,23 @@
 
     var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.add(start);
+
+    // ******** for testing purposes, DELETE before production **********
+    var text2 = game.add.text(game.world.centerX - 200, game.world.centerY + 100, 'Press ENTER to check out Level 2');
+
+    var enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    enterKey.onDown.add(start2);
+    // ******** END test function for level 2 *******
   }
 
   function start(){
     game.state.start('lvl1');
   }
+
+  // ******** for testing purposes, DELETE before production **********
+  function start2(){
+    game.state.start('lvl2');
+  }
+  // ******** END test function for level 2 *******
+
 })();

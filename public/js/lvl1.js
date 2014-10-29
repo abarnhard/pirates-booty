@@ -7,7 +7,7 @@
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#6686ff';
 
-    map = game.add.tilemap('mario');
+    map = game.add.tilemap('mario2');
     map.addTilesetImage('worldfinal', 'tiles');
     map.setCollisionBetween(23, 44);
 
