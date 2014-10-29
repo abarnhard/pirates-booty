@@ -10,7 +10,9 @@
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
     map.setCollisionBetween(39, 44);
-    layer = map.createLayer('Tile Layer 1');
+    map.addTilesetImage('world', 'tiles2');
+    map.setCollisionBetween(111, 156);
+    layer = map.createLayer('WorldTest');
     layer.resizeWorld();
 
     player = game.add.sprite(20, 200, 'hero');
@@ -18,6 +20,7 @@
     player.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     game.physics.enable(player, Phaser.Physics.ARCADE);
+
     player.anchor.set(0.5, 0.5);
     player.body.gravity.y = 250;
     player.body.setSize(32, 50, 0, 5);
@@ -30,7 +33,7 @@
 
   function update(){
     game.physics.arcade.collide(player, layer);
-    player.body.velocity.x=0;
+    player.body.velocity.x = 0;
 
     if(cursors.left.isDown){
       player.body.velocity.x = -150;
