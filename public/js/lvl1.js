@@ -19,9 +19,9 @@
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.anchor.set(0.5, 0.5);
-    player.body.gravity.y = 250;
+    player.body.gravity.y = 200;
     player.body.setSize(32, 50, 0, 5);
-    player.body.bounce.y=0.2;
+    player.body.bounce.y=0.5;
     player.body.linearDamping = 1;
     game.camera.follow(player);
     cursors = game.input.keyboard.createCursorKeys();
@@ -35,8 +35,7 @@
     if(cursors.left.isDown){
       player.body.velocity.x = -150;
       player.animations.play('left');
-    }
-    else if(cursors.right.isDown){
+    }else if(cursors.right.isDown){
       player.body.velocity.x = 150;
       player.animations.play('right');
     }else{
@@ -44,8 +43,10 @@
       player.animations.play('still');
     }
 
-    if(cursors.up.isDown && player.body.touching.down){
-      player.body.velocity.y = -350;
+    if (cursors.up.isDown){
+      if (player.body.onFloor()){
+        player.body.velocity.y = -200;
+      }
     }
   }
 
