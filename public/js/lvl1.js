@@ -1,7 +1,7 @@
 (function(){
   game.state.add('lvl1', {create:create, update:update, render:render});
 
-  var map, layer, player, cursors;
+  var map, layer, player, cursors, ladyPirate;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -16,10 +16,20 @@
     layer.resizeWorld();
 
 
+    ladyPirate = game.add.sprite(200, 200, 'ladyPirate');
+    ladyPirate.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
+    ladyPirate.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
+    ladyPirate.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
+    ladyPirate.anchor.set(0.5, 0.5);
+
+
     player = game.add.sprite(20, 200, 'hero');
     player.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
     player.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
+    player.animations.add('jump', [26, 27, 28, 29, 30, 31, 32], 10, true);
+    player.animations.add('shootLeft', [221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233], 10, true);
+    player.animations.add('shootRight', [247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259], 10, true);
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.anchor.set(0.5, 0.5);
 
@@ -57,11 +67,12 @@
       player.body.velocity.x = 0;
       player.animations.stop();
       player.frame = 130;
-      // player.animations.play('still');
+      //player.animations.play('shootLeft');
     }
 
     if(cursors.up.isDown && player.body.onFloor()){
       player.body.velocity.y = -350;
+      //player.animations.play('shootLeft');
     }
   }
 
