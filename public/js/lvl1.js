@@ -26,11 +26,19 @@
     game.camera.follow(player);
     cursors = game.input.keyboard.createCursorKeys();
 
+    coins = game.add.group();
+    coins.enableBody = true;
+    for(var i = 0; i < 12; i++){
+      var coin = coins.create(i * 100, 0, 'coin');
+      coin.body.gravity.y = 400;
+      coin.body.bounce.y = 0.7 + Math.random() * 0.2;
+      }
   }
 
   function update(){
     game.physics.arcade.collide(player, layer);
     player.body.velocity.x=0;
+    game.physics.arcade.collide(coins, layer);
 
     if(cursors.left.isDown){
       player.body.velocity.x = -150;
