@@ -1,7 +1,7 @@
 (function(){
   game.state.add('lvl1', {create:create, update:update, render:render});
 
-  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32;
+  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -59,8 +59,8 @@
 
     coins = game.add.group();
     coins.enableBody = true;
-    for(var i = 0; i < 12; i++){
-      var coin = coins.create(i * 100, 0, 'coin');
+    for(var i = 0; i < 100; i++){
+      var coin = coins.create(i * 100+40, 0, 'coin');
       coin.body.gravity.y = 400;
       coin.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
@@ -69,14 +69,25 @@
     arrows.enableBody = true;
     arrows.createMultiple(2, 'arrow');
     isShooting = false;
+
+    scoreText = game.add.text(game.camera.x, game.camera.y, 'score: 0', { fontSize: '32px', fill: '#000', align: 'center' });
+  }
+
+  function updateText(){
+    scoreText.setText("Score: " +score);
   }
 
   function update(){
+    scoreText.x=game.camera.x;
+    scoreText.y=game.camera.y;
+
     game.physics.arcade.collide(player, layer);
     player.body.velocity.x = 0;
     game.physics.arcade.collide(coins, layer);
     game.physics.arcade.overlap(arrows, layer, killShot, null, this);
     game.physics.arcade.overlap(arrows, ladyPirates, killNpc, null, this);
+    game.physics.arcade.overlap(player, coins, collectCoin, null, this);
+
 
 
     if(cursors.left.isDown){
@@ -99,6 +110,13 @@
       //player.animations.play('shootLeft');
     }
   }
+
+  function collectCoin (player, coin) {
+    coin.kill();
+    score += 100;
+    scoreText.text = 'Score: ' + score;
+  }
+
 
   function render(){
     game.debug.body(player);
