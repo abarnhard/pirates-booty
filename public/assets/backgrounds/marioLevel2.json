@@ -6,7 +6,7 @@
          "name":"Lvl2 background",
          "opacity":0.939999997615814,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":212,
          "x":0,
          "y":0

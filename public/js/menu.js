@@ -8,9 +8,13 @@
     game.load.image('tiles', '/assets/backgrounds/worldfinal.png');
     //CHARACTERS:
     game.load.spritesheet('hero', 'assets/characters/hero/hero.png', 64, 64, 265);
-
+    game.load.spritesheet('ladyPirate', 'assets/characters/pirates/pirateGirl.png', 64, 64, 265);
+    game.load.spritesheet('skeleton', 'assets/characters/pirates/skeleton.png', 64, 64, 265);
+    game.load.spritesheet('elf', 'assets/characters/caveDwellers/elf.png', 64, 64, 265);
+    game.load.spritesheet('orc', 'assets/characters/caveDwellers/spearOrc.png', 64, 64, 265);
     //Other
     game.load.spritesheet('coin', 'assets/otherAnimations/coin.png', 32, 32);
+    game.load.spritesheet('arrow', 'assets/otherAnimations/arrow.png', 32, 32);
   }
 
   function create(){
