@@ -19,17 +19,17 @@
     player.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
     player.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
-    game.physics.enable(player, Phaser.Physics.NINJA);
+    game.physics.enable(player, Phaser.Physics.ARCADE);
     player.anchor.set(0.5, 0.5);
 
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 250;
     player.body.setSize(32, 50, 0, 5);
-    player.body.bounce.y=0.5;
+    player.body.bounce.y = 0.3;
     player.body.linearDamping = 1;
 
     game.camera.follow(player);
-    
+
     cursors = game.input.keyboard.createCursorKeys();
 
   }
