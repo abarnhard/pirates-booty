@@ -49,7 +49,7 @@
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 450;
     player.body.setSize(18, 50, 0, 5);
-    player.body.bounce.y = 0.3;
+    player.body.bounce.y = 0.1;
     player.body.linearDamping = 1;
 
     game.camera.follow(player);
