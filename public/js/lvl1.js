@@ -85,8 +85,8 @@
     game.physics.arcade.overlap(player, coins, collectCoin, null, this);
 
     arrows.forEachAlive(function(shot){
-      widthOfScreen = 800;
-      if(Math.abs(player.x - shot.x)  >= widthOfScreen){
+      distanceFromPlayer = 600;
+      if(Math.abs(player.x - shot.x)  >= distanceFromPlayer){
         shot.kill();
       }
     }, this);
@@ -132,13 +132,13 @@
       player.animations.play('shootLeft');
       shot.frame = 1;
       shot.reset(player.x - offset, player.y - offset);
-      shot.body.velocity.x = -250;
+      shot.body.velocity.x = -350;
     }else if(cursors.right.isDown){
       isShooting = true;
       player.animations.play('shootRight');
       shot.frame = 0;
       shot.reset(player.x + offset, player.y - offset);
-      shot.body.velocity.x = 250;
+      shot.body.velocity.x = 350;
     }
   }
 
