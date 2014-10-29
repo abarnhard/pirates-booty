@@ -9,9 +9,10 @@
 
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
-    map.setCollisionBetween(23, 44);
+    map.setCollisionBetween(1, 20);
 
     layer = map.createLayer('Tile Layer 1');
+    layer.enableBody = true;
     layer.resizeWorld();
 
 
@@ -43,7 +44,7 @@
 
   function update(){
     game.physics.arcade.collide(player, layer);
-    player.body.velocity.x=0;
+    player.body.velocity.x = 0;
     game.physics.arcade.collide(coins, layer);
 
     if(cursors.left.isDown){
