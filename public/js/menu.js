@@ -24,6 +24,16 @@
     //Other
     game.load.spritesheet('coin', 'assets/otherAnimations/coin.png', 32, 32);
     game.load.spritesheet('arrow', 'assets/otherAnimations/arrow.png', 32, 32);
+    // Audio
+    game.load.audio('jump', '/assets/music/Sonic_spring.wav');
+    game.load.audio('bowShot', '/assets/music/Sonic_hit_enemy.wav');
+    game.load.audio('getCoin', '/assets/music/Sonic_ring.wav');
+    game.load.audio('enemyDeath', '/assets/music/Sonic_ding2.wav');
+    game.load.audio('death', '/assets/music/Death.wav');
+    game.load.audio('beatGame', '/assets/music/Defeat_bowser.wav');
+    game.load.audio('theme_1', '/assets/music/level1_Theme.mp3');
+    game.load.audio('theme_2', '/assets/music/level2_theme.mp3');
+
   }
 
 var button, enterKey;
