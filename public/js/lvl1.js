@@ -267,7 +267,7 @@
 
   function gameOver(){
     game.world.setBounds(0, 0, 0, 0);
-    game.state.restart();
+    game.state.start('gameOver');
   }
 
 })();
