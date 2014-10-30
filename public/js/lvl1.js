@@ -21,9 +21,7 @@
     ladyPirates.enableBody = true;
     ladyPirates.createMultiple(2, 'ladyPirate');
     ladyPirates.forEach(function(lp){
-      lp.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
-      lp.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
-      lp.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
+      lp.animations.add('fly', [26, 27, 28, 29, 30, 31, 32], 10, true);
       game.physics.enable(lp, Phaser.Physics.ARCADE);
       lp.anchor.set(0.5, 0.5);
       lp.body.setSize(28, 50, 0, 5);
@@ -37,12 +35,13 @@
     var counter=0;
     ladyPirates.forEach(function(ladyPirate){
       ladyPirate.reset(ladyPiratePosition[counter], 0);
+      ladyPirate.animations.play('fly', 5, true);
       counter++;
      }, this);
 
     skeletons = game.add.group();
     skeletons.enableBody = true;
-    skeletons.createMultiple(2, 'skeleton');
+    skeletons.createMultiple(18, 'skeleton');
     skeletons.forEach(function(sk){
       sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
       sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
@@ -56,7 +55,7 @@
     skeletons.setAll('body.bounce.y', 0.1);
     skeletons.setAll('body.linearDamping', 1);
 
-    var skeletonPosition = [592, 1456];
+    var skeletonPosition = [624, 1936, 2704, 2960, 3216, 3568, 3824, 3856, 4048, 4304, 4560, 4816, 4880, 5264, 5680, 5776, 5936, 7024];
     var counter=0;
     skeletons.forEach(function(skeleton){
       skeleton.reset(skeletonPosition[counter], 0);
