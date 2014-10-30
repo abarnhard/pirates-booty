@@ -24,6 +24,7 @@
     map.addTilesetImage('treasurechest', 'treasurechest');
     map.setCollisionBetween(1, 65);
     map.setCollisionBetween(100, 110);
+    map.setCollisionBetween(75, 78);
 
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
