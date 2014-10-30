@@ -11,24 +11,21 @@
 
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
-    map.setCollisionBetween(1, 18);
-    // map.setCollision(49);
-    map.setCollision(77);
     map.addTilesetImage('cloud1', 'cloud1');
-    map.addTilesetImage('cloud2', 'cloud2');
     map.addTilesetImage('boatWater2', 'boat');
+    map.setCollisionBetween(1, 18);
+    map.setCollisionBetween(98);
+
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
     ladyPirates = game.add.group();
     ladyPirates.enableBody = true;
-    ladyPirates.createMultiple(2, 'ladyPirate');
+    ladyPirates.createMultiple(18, 'ladyPirate');
     ladyPirates.forEach(function(lp){
       lp.frame = FRAME_L;
-      lp.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
-      lp.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
-      lp.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
       lp.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
+      lp.animations.add('fly', [26, 27, 28, 29, 30, 31, 32], 10, true);
       game.physics.enable(lp, Phaser.Physics.ARCADE);
       lp.anchor.set(0.5, 0.5);
       lp.body.setSize(28, 50, 0, 5);
@@ -38,21 +35,23 @@
     ladyPirates.setAll('body.bounce.y', 0.1);
     ladyPirates.setAll('body.linearDamping', 1);
 
-    var ladyPiratePosition = [944, 1456];
+    var ladyPiratePosition = [944, 1456, 1776, 2128, 2448, 2896, 3408, 3696, 3984, 4250, 4432, 5232, 5424, 5680, 6320, 6394, 6458, 6608];
     var counter=0;
     ladyPirates.forEach(function(ladyPirate){
       ladyPirate.reset(ladyPiratePosition[counter], 0);
+      ladyPirate.animations.play('fly', 5, true);
       counter++;
      }, this);
 
     skeletons = game.add.group();
     skeletons.enableBody = true;
-    skeletons.createMultiple(2, 'skeleton');
+    skeletons.createMultiple(17, 'skeleton');
     skeletons.forEach(function(sk){
       sk.frame = FRAME_L;
       sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
       sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
-      sk.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
+      sk.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
+      sk.animations.add('fly', [26, 27, 28, 29, 30, 31, 32], 10, true);
       game.physics.enable(sk, Phaser.Physics.ARCADE);
       sk.anchor.set(0.5, 0.5);
       sk.body.setSize(28, 50, 0, 5);
@@ -62,7 +61,7 @@
     skeletons.setAll('body.bounce.y', 0.1);
     skeletons.setAll('body.linearDamping', 1);
 
-    var skeletonPosition = [592, 1456];
+    var skeletonPosition = [624, 1936, 2704, 2960, 3216, 3568, 3824, 3856, 4048, 4304, 4560, 4816, 4880, 5264, 5680, 5936, 6448];
     var counter=0;
     skeletons.forEach(function(skeleton){
       skeleton.reset(skeletonPosition[counter], 0);
@@ -96,10 +95,12 @@
 
     coins = game.add.group();
     coins.enableBody = true;
-    for(var i = 0; i < 12; i++){
+    for(var i = 0; i < 120; i++){
       var coin = coins.create(i * 100, 0, 'coin');
       coin.body.gravity.y = 450;
       coin.body.bounce.y = 0.7 + Math.random() * 0.2;
+      coin.animations.add('turn');
+      coin.animations.play('turn', 5, true);
     }
 
     arrows = game.add.group();
