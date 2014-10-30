@@ -32,6 +32,7 @@
     map.setCollisionBetween(75, 77);
     map.setCollisionBetween(97, 100);
     map.setCollisionBetween(145, 146);
+    
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 

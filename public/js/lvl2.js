@@ -13,6 +13,9 @@
 
     map = game.add.tilemap('mario2');
     map.addTilesetImage('worldfinal', 'tiles');
+    map.addTilesetImage('treasurechest', 'treasurechest');
+    map.setCollisionBetween(1, 65);
+    map.setCollisionBetween(100, 110);
 
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
@@ -20,7 +23,7 @@
 
     ladyPirates = game.add.group();
     ladyPirates.enableBody = true;
-    ladyPirates.createMultiple(18, 'ladyPirate');
+    ladyPirates.createMultiple(18, 'elf');
     ladyPirates.forEach(function(lp){
       lp.frame = FRAME_L;
       lp.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
@@ -44,7 +47,7 @@
 
     skeletons = game.add.group();
     skeletons.enableBody = true;
-    skeletons.createMultiple(17, 'skeleton');
+    skeletons.createMultiple(17, 'orc');
     skeletons.forEach(function(sk){
       sk.frame = FRAME_L;
       sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, false);
