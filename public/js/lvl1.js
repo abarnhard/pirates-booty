@@ -5,7 +5,7 @@
       FRAME_L = 117,
       FRAME_R = 143,
       skPath = [150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150],
-      skIndex = 0;
+      skIndex;
   // sound vars
   var jump, bowShoot, getCoin, enemyDeath, death, beatGame, theme_1;
 
@@ -14,6 +14,8 @@
     game.stage.backgroundColor = '#6686ff';
     // reset score
     score = 0;
+    //reset skeleton index
+    skIndex = 0;
     // add audio
     theme_1 = game.add.audio('theme_1');
     jump = game.add.audio('jump');
@@ -32,7 +34,7 @@
     map.setCollisionBetween(75, 77);
     map.setCollisionBetween(97, 100);
     map.setCollisionBetween(145, 146);
-    
+
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
@@ -301,7 +303,7 @@
   function gameOver(){
     theme_1.stop();
     death.play();
-    game.world.setBounds(0, 0, 0, 0);
+    game.world.setBounds(0, 0, 800, 480);
     game.state.start('gameOver');
   }
 
