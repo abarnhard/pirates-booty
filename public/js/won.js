@@ -7,7 +7,8 @@
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     game.add.sprite(0, 0, 'foundTres');
-    button = game.add.button(250, 450, 'replay', replay, this);
+    button = game.add.button(550, 200, 'replay', replay, this);
+    button.scale.setTo(.7);
 
 
   }

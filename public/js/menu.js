@@ -12,6 +12,7 @@
     game.load.image('cloud1', '/assets/backgrounds/cloud1.png');
     game.load.image('gameOverScreen', '/assets/backgrounds/gameOver.png');
     game.load.image('restart', '/assets/backgrounds/restart.png');
+    game.load.image('replay', '/assets/backgrounds/replay.png');
     game.load.image('foundTres', '/assets/backgrounds/foundTreasure.png');
     game.load.image('start', '/assets/skullStart.png');
     //CHARACTERS:
@@ -42,7 +43,7 @@ var button;
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     game.add.sprite(0, 0, 'menu');
-    button = game.add.button(game.world.centerX + 280, 275, 'start', startClick, this);
+    button = game.add.button(680, 275, 'start', startClick, this);
     button.scale.setTo(.5);
 
   }
