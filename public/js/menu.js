@@ -26,8 +26,7 @@
   }
 
 var button;
-var restartB;
-var replay;
+
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -36,29 +35,6 @@ var replay;
     button = game.add.button(game.world.centerX + 280, 275, 'start', startClick, this);
     button.scale.setTo(.5);
 
-    //game.add.sprite(0, 0, 'gameOver');
-    //restartB = game.add.restart(250, 350, 'restart', restartLevel, this);
-
-    //game.add.sprite(0, 0, 'foundTres');
-    //replay = game.add.replay(250, 450, 'replay', startClick, this);
-
-
-
-    //game.add.tileSprite(0, 0, 800, 600, 'bg');
-    //game.stage.backgroundColor = '#6686ff';
-
-    //var text = game.add.text(game.world.centerX, game.world.centerY, 'Mario\nPress SPACE to Begin');
-    //text.anchor.setTo(0.5);
-
-    //var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    //spaceKey.onDown.add(start);
-
-    // ******** for testing purposes, DELETE before production **********
-    //var text2 = game.add.text(game.world.centerX - 200, game.world.centerY + 100, 'Press ENTER to check out Level 2');
-
-    //var enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-    //enterKey.onDown.add(start2);
-    // ******** END test function for level 2 *******
   }
 
 // **** Main Menu Start function **** ///
@@ -66,15 +42,5 @@ var replay;
     this.game.state.start('lvl1');
   }
 
-// ***** Game Over Restart Game Function ***** /////
-  function restartLevel(){
-    this.game.state.start('lvl1')
-  }
-
-  // ******** for testing purposes, DELETE before production **********
-  function start2(){
-    game.state.start('lvl2');
-  }
-  // ******** END test function for level 2 *******
 
 })();
