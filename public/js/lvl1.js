@@ -9,12 +9,11 @@
 
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
-    map.setCollisionBetween(1, 18);
-    // map.setCollision(49);
-    map.setCollision(77);
     map.addTilesetImage('cloud1', 'cloud1');
-    map.addTilesetImage('cloud2', 'cloud2');
     map.addTilesetImage('boatWater2', 'boat');
+    map.setCollisionBetween(1, 18);
+    map.setCollisionBetween(98);
+
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
@@ -101,10 +100,12 @@
 
     coins = game.add.group();
     coins.enableBody = true;
-    for(var i = 0; i < 12; i++){
+    for(var i = 0; i < 120; i++){
       var coin = coins.create(i * 100, 0, 'coin');
       coin.body.gravity.y = 450;
       coin.body.bounce.y = 0.7 + Math.random() * 0.2;
+      coin.animations.add('turn');
+      coin.animations.play('turn', 5, true);
     }
 
     arrows = game.add.group();

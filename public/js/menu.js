@@ -10,7 +10,6 @@
     game.load.image('tiles', '/assets/backgrounds/worldfinal.png');
     game.load.image('boat', '/assets/backgrounds/boatWater2.png');
     game.load.image('cloud1', '/assets/backgrounds/cloud1.png');
-    game.load.image('cloud2', '/assets/backgrounds/cloud2.png');
     game.load.image('gameOver', '/assets/backgrounds/gameOver.png');
     game.load.image('start', '/assets/skullStart.png');
     //CHARACTERS:
