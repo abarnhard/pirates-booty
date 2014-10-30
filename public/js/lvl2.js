@@ -55,7 +55,7 @@
 
     skeletons = game.add.group();
     skeletons.enableBody = true;
-    skeletons.createMultiple(17, 'orc');
+    skeletons.createMultiple(13, 'orc');
     skeletons.forEach(function(sk){
       sk.frame = FRAME_L;
       sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, false);
@@ -72,7 +72,7 @@
     skeletons.setAll('body.bounce.y', 0.1);
     skeletons.setAll('body.linearDamping', 1);
 
-    var skeletonPosition = [624, 1936, 2704, 2960, 3216, 3568, 3824, 3856, 4048, 4304, 4560, 4816, 4880, 5264, 5680, 5936, 6448];
+    var skeletonPosition = [336, 416, 720, 1648, 2064, 2480, 3312, 3664, 4064, 4154, 4912, 5040, 6385];
     var counter=0;
     skeletons.forEach(function(skeleton){
       skeleton.reset(skeletonPosition[counter], 0);
@@ -186,14 +186,14 @@
     console.log('skIndex === skPath.length - 1', skIndex === skPath.length - 1);
     */
     skeletons.forEachAlive(function(sk){
-      sk.body.velocity.x = 0;
+  /*    sk.body.velocity.x = 0;
       if(skIndex === 0){
         sk.animations.play('right');
       }
       if(skIndex === skPath.length - 1){
         sk.animations.play('left');
       }
-      sk.body.velocity.x = skPath[skIndex];
+      sk.body.velocity.x = skPath[skIndex];*/
     });
     skIndex = skIndex + 1 >= skPath.length ? 0 : skIndex + 1;
 
