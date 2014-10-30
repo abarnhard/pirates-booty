@@ -23,7 +23,7 @@
 
     ladyPirates = game.add.group();
     ladyPirates.enableBody = true;
-    ladyPirates.createMultiple(18, 'elf');
+    ladyPirates.createMultiple(20, 'elf');
     ladyPirates.forEach(function(lp){
       lp.frame = FRAME_L;
       lp.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
@@ -37,7 +37,7 @@
     ladyPirates.setAll('body.bounce.y', 0.1);
     ladyPirates.setAll('body.linearDamping', 1);
 
-    var ladyPiratePosition = [944, 1456, 1776, 2128, 2448, 2896, 3408, 3696, 3984, 4240, 4432, 5232, 5424, 6320, 6386, 6608];
+    var ladyPiratePosition = [784, 816, 1094, 1488, 1520, 1840, 1872, 2384, 3184, 4464, 4592, 4784, 5360, 5520, 5616, 5744, 5962, 5154, 6186];
     var counter=0;
     ladyPirates.forEach(function(ladyPirate){
       ladyPirate.reset(ladyPiratePosition[counter], 0);
