@@ -7,7 +7,7 @@
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     game.add.sprite(0, 0, 'gameOverScreen');
-    button = game.add.button(250, 350, 'restart', restartLevel, this);
+    button = game.add.button(220, 350, 'restart', restartLevel, this);
 
   }
 
