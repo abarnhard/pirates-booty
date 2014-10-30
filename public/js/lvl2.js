@@ -5,11 +5,13 @@
       FRAME_L = 117,
       FRAME_R = 143,
       skPath = [150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150],
-      skIndex = 0;
+      skIndex;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = null;
+    // set path index
+    skIndex = 0;
     // add audio
     theme_2 = game.add.audio('theme_2');
     jump = game.add.audio('jump');
@@ -68,6 +70,7 @@
       game.physics.enable(sk, Phaser.Physics.ARCADE);
       sk.anchor.set(0.5, 0.5);
       sk.body.setSize(28, 50, 0, 5);
+      sk.spriteHasLanded = false;
     });
     skeletons.setAll('body.collideWorldBounds', true);
     skeletons.setAll('body.gravity.y', 400);
@@ -188,14 +191,19 @@
     console.log('skIndex === skPath.length - 1', skIndex === skPath.length - 1);
     */
     skeletons.forEachAlive(function(sk){
-  /*    sk.body.velocity.x = 0;
-      if(skIndex === 0){
-        sk.animations.play('right');
+      if(sk.body.onFloor() && !sk.spriteHasLanded){
+        sk.spriteHasLanded = true;
       }
-      if(skIndex === skPath.length - 1){
-        sk.animations.play('left');
+      if(sk.spriteHasLanded){
+        sk.body.velocity.x = 0;
+        if(skIndex === 0){
+          sk.animations.play('right');
+        }
+        if(skIndex === skPath.length - 1){
+          sk.animations.play('left');
+        }
+        sk.body.velocity.x = skPath[skIndex];
       }
-      sk.body.velocity.x = skPath[skIndex];*/
     });
     skIndex = skIndex + 1 >= skPath.length ? 0 : skIndex + 1;
 
