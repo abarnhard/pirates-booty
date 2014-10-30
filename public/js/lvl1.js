@@ -8,7 +8,7 @@
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#6686ff';
-
+    // make tile map
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
     map.addTilesetImage('cloud1', 'cloud1');
