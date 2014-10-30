@@ -1,7 +1,7 @@
 (function(){
   game.state.add('lvl1', {create:create, update:update, render:render});
 
-  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame,
+  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score, scoreText, pFrame,
       FRAME_L = 117,
       FRAME_R = 143,
       skPath = [150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150],
@@ -12,7 +12,8 @@
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#6686ff';
-
+    // reset score
+    score = 0;
     // add audio
     theme_1 = game.add.audio('theme_1');
     jump = game.add.audio('jump');
@@ -184,12 +185,12 @@
     }, this);*/
     // make all skeletons walk
 
-
+    /*
     console.log('skIndex', skIndex);
     console.log('skPath.length', skPath.length);
     console.log('skIndex === 0', skIndex === 0);
     console.log('skIndex === skPath.length - 1', skIndex === skPath.length - 1);
-
+    */
     skeletons.forEachAlive(function(sk){
       sk.body.velocity.x = 0;
       if(skIndex === 0){
@@ -242,8 +243,8 @@
   }
 
   function render(){
-    game.debug.body(player);
-    game.debug.body(layer);
+    // game.debug.body(player);
+    // game.debug.body(layer);
   }
 
   function shoot(){

@@ -165,12 +165,12 @@
     }, this);*/
     // make all skeletons walk
 
-
+    /*
     console.log('skIndex', skIndex);
     console.log('skPath.length', skPath.length);
     console.log('skIndex === 0', skIndex === 0);
     console.log('skIndex === skPath.length - 1', skIndex === skPath.length - 1);
-
+    */
     skeletons.forEachAlive(function(sk){
       sk.body.velocity.x = 0;
       if(skIndex === 0){
