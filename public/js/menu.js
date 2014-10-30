@@ -20,6 +20,7 @@
     //Other
     game.load.spritesheet('coin', 'assets/otherAnimations/coin.png', 32, 32);
     game.load.spritesheet('arrow', 'assets/otherAnimations/arrow.png', 32, 32);
+    game.load.image('treasureChest', 'assets/otherAnimations/treasurechest.png', 32, 32);
   }
 
 var button;
