@@ -84,7 +84,7 @@
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 450;
     player.body.setSize(18, 50, 0, 5);
-    player.body.bounce.y = 0.3;
+    player.body.bounce.y = 0.1;
     player.body.linearDamping = 1;
 
     game.camera.follow(player);
@@ -197,6 +197,7 @@
     // check if player has made it to the door to lvl2
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
       player.destroy();
+      game.world.setBounds(0, 0, 0, 0);
       game.state.start('lvl2');
     }
     // check if player fell into ocean
@@ -265,6 +266,7 @@
   }
 
   function gameOver(){
+    game.world.setBounds(0, 0, 0, 0);
     game.state.restart();
   }
 
