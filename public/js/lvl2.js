@@ -10,12 +10,22 @@
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = null;
+    // add audio
+    theme_2 = game.add.audio('theme_2');
+    jump = game.add.audio('jump');
+    bowShot = game.add.audio('bowShot');
+    getCoin = game.add.audio('getCoin');
+    enemyDeath = game.add.audio('enemyDeath');
+    death = game.add.audio('death');
+    beatGame = game.add.audio('beatGame');
 
     map = game.add.tilemap('mario2');
     map.addTilesetImage('worldfinal', 'tiles');
     map.addTilesetImage('treasurechest', 'treasurechest');
-    map.setCollisionBetween(1, 65);
+    map.addTilesetImage('torch', 'torch');
+    map.setCollisionBetween(1, 66);
     map.setCollisionBetween(100, 110);
+    map.setCollisionBetween(75, 78);
 
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
@@ -23,7 +33,7 @@
 
     ladyPirates = game.add.group();
     ladyPirates.enableBody = true;
-    ladyPirates.createMultiple(18, 'elf');
+    ladyPirates.createMultiple(20, 'elf');
     ladyPirates.forEach(function(lp){
       lp.frame = FRAME_L;
       lp.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
@@ -37,7 +47,7 @@
     ladyPirates.setAll('body.bounce.y', 0.1);
     ladyPirates.setAll('body.linearDamping', 1);
 
-    var ladyPiratePosition = [944, 1456, 1776, 2128, 2448, 2896, 3408, 3696, 3984, 4240, 4432, 5232, 5424, 6320, 6386, 6608];
+    var ladyPiratePosition = [784, 816, 1094, 1488, 1520, 1840, 1872, 2384, 3184, 4464, 4592, 4784, 5360, 5520, 5616, 5744, 5962, 5154, 6186];
     var counter=0;
     ladyPirates.forEach(function(ladyPirate){
       ladyPirate.reset(ladyPiratePosition[counter], 0);
@@ -72,7 +82,7 @@
       counter++;
      }, this);
 
-    player = game.add.sprite((7 * tile) - 16, 200, 'hero');
+    player = game.add.sprite((2 * tile) - 16, 200, 'hero');
     player.frame = FRAME_R;
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     player.animations.add('jump', [26, 27, 28, 29, 30, 31, 32], 10, true);
@@ -113,6 +123,9 @@
     isShooting = false;
 
     scoreText = game.add.text(game.camera.x, game.camera.y, 'score: 0', { fontSize: '32px', fill: '#000', align: 'center' });
+
+    theme_2.loop = true;
+    theme_2.play();
   }
 
   function update(){
@@ -202,10 +215,12 @@
     }
     if(cursors.up.isDown && player.body.onFloor()){
       player.body.velocity.y = -400;
+      jump.play();
     }
     // check if player has made it to the door to lvl2
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
       player.destroy();
+      theme_2.stop();
       game.world.setBounds(0, 0, 0, 0);
       game.state.start('lvl2');
     }
@@ -217,13 +232,14 @@
   }
 
   function collectCoin (player, coin) {
+    getCoin.play();
     coin.kill();
     score += 100;
     scoreText.text = 'Score: ' + score;
   }
 
   function render(){
-    game.debug.body(player);
+//    game.debug.body(player);
     game.debug.body(layer);
   }
 
@@ -238,6 +254,7 @@
     // console.log('player frame:', player.frame);
     if(cursors.left.isDown || player.frame < FRAME_R && !cursors.right.isDown){
       isShooting = true;
+      bowShot.play();
       player.animations.play('shootLeft');
       shot.frame = 1;
       shot.reset(player.x - offset, player.y - offset);
@@ -245,6 +262,7 @@
       // player is facing right
     }else if(cursors.right.isDown || player.frame >= FRAME_R && !cursors.left.isDown){
       isShooting = true;
+      bowShot.play();
       player.animations.play('shootRight');
       shot.frame = 0;
       shot.reset(player.x + offset, player.y - offset);
@@ -261,6 +279,7 @@
   }
 
   function killNpc(shot, npc){
+    enemyDeath.play();
     shot.kill();
     npc.kill();
   }
@@ -275,6 +294,8 @@
   }
 
   function gameOver(){
+    theme_2.stop();
+    death.play();
     game.world.setBounds(0, 0, 0, 0);
     game.state.start('gameOver');
   }

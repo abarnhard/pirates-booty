@@ -25,6 +25,7 @@
     game.load.spritesheet('coin', 'assets/otherAnimations/coin.png', 32, 32);
     game.load.spritesheet('arrow', 'assets/otherAnimations/arrow.png', 32, 32);
     game.load.spritesheet('treasurechest', 'assets/otherAnimations/treasurechest.png', 32, 32);
+    game.load.spritesheet('torch', 'assets/otherAnimations/torch.png', 32, 32);
     // Audio
     game.load.audio('jump', '/assets/music/Sonic_spring.wav');
     game.load.audio('bowShot', '/assets/music/Sonic_hit_enemy.wav');
