@@ -2,6 +2,8 @@
   game.state.add('lvl1', {create:create, update:update, render:render});
 
   var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame;
+  var FRAME_L = 117, FRAME_R = 143;
+  var skPath = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10], skIndex = 0;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -22,9 +24,11 @@
     ladyPirates.enableBody = true;
     ladyPirates.createMultiple(2, 'ladyPirate');
     ladyPirates.forEach(function(lp){
+      lp.frame = FRAME_L;
       lp.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
       lp.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
       lp.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
+      lp.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
       game.physics.enable(lp, Phaser.Physics.ARCADE);
       lp.anchor.set(0.5, 0.5);
       lp.body.setSize(28, 50, 0, 5);
@@ -45,6 +49,7 @@
     skeletons.enableBody = true;
     skeletons.createMultiple(2, 'skeleton');
     skeletons.forEach(function(sk){
+      sk.frame = FRAME_L;
       sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
       sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
       sk.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
@@ -64,19 +69,8 @@
       counter++;
      }, this);
 
-
-
-
-
-
-
-
-
-
-
-
     player = game.add.sprite(20, 200, 'hero');
-    player.frame = 117;
+    player.frame = FRAME_R;
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     player.animations.add('jump', [26, 27, 28, 29, 30, 31, 32], 10, true);
     var shootL = player.animations.add('shootLeft', [221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233], 50, false),
@@ -133,9 +127,9 @@
     if(parseInt(player.body.velocity.x) !== 0){
       // console.log('Player x velocity:', parseInt(player.body.velocity.x))
       if(parseInt(player.body.velocity.x) < 0){
-        pFrame = 117;
+        pFrame = FRAME_L;
       }else{
-        pFrame = 143;
+        pFrame = FRAME_R;
       }
       // console.log('pFrame:', pFrame);
     }
@@ -149,6 +143,29 @@
         shot.kill();
       }
     }, this);
+
+    // make all pirates jump
+    ladyPirates.forEachAlive(function(lp){
+      if(lp.body.onFloor()){
+        lp.animations.play('jump');
+        lp.body.velocity.y = -400;
+      }
+    }, this);
+    // make all skeletons walk
+    /*
+    skIndex = skIndex + 1 > skPath.length ? 0 : skIndex + 1;
+    console.log('skIndex', skIndex);
+    skeletons.forEachAlive(function(sk){
+      if(skIndex === 0){
+        sk.animations.stop();
+        sk.animations.play('right');
+      }else if(skIndex === skPath.length){
+        sk.animations.stop();
+        sk.animations.play('left');
+      }
+      sk.body.velocity.x += skPath[skIndex];
+    });
+    */
     // check input keys to determine movement
     if(cursors.left.isDown){
       player.body.velocity.x = -250;
@@ -195,17 +212,17 @@
     if(!shot){return;}
     // player facing left, 143 is the first frame of facing right
     // the first frame of facing left is 117
-    console.log('left cursor is down:', cursors.left.isDown);
-    console.log('right cursor is down:', cursors.right.isDown);
-    console.log('player frame:', player.frame);
-    if(cursors.left.isDown || player.frame < 143 && !cursors.right.isDown){
+    // console.log('left cursor is down:', cursors.left.isDown);
+    // console.log('right cursor is down:', cursors.right.isDown);
+    // console.log('player frame:', player.frame);
+    if(cursors.left.isDown || player.frame < FRAME_R && !cursors.right.isDown){
       isShooting = true;
       player.animations.play('shootLeft');
       shot.frame = 1;
       shot.reset(player.x - offset, player.y - offset);
       shot.body.velocity.x = -350;
       // player is facing right
-    }else if(cursors.right.isDown || player.frame >= 143 && !cursors.left.isDown){
+    }else if(cursors.right.isDown || player.frame >= FRAME_R && !cursors.left.isDown){
       isShooting = true;
       player.animations.play('shootRight');
       shot.frame = 0;
