@@ -234,7 +234,7 @@
     // check if player fell into ocean
     var screenHeight = 480;
     if(player.y >= screenHeight - (tile * 3)){
-      // gameOver();
+      gameOver();
     }
   }
 
