@@ -26,7 +26,7 @@
     game.load.spritesheet('arrow', 'assets/otherAnimations/arrow.png', 32, 32);
   }
 
-var button;
+var button, enterKey;
 
 
   function create(){
@@ -36,11 +36,17 @@ var button;
     button = game.add.button(680, 275, 'start', startClick, this);
     button.scale.setTo(.5);
 
+    enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    enterKey.onDown.add(startLvl2);
   }
 
 // **** Main Menu Start function **** ///
     function startClick () {
     this.game.state.start('lvl1');
+  }
+
+  function startLvl2(){
+    game.state.start('lvl2');
   }
 
 
