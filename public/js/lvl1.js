@@ -14,8 +14,8 @@
     map.addTilesetImage('cloud1', 'cloud1');
     map.addTilesetImage('boatWater2', 'boat');
     map.setCollisionBetween(1, 18);
-    map.setCollisionBetween(98);
-
+    map.setCollisionBetween(97, 100);
+    map.setCollisionBetween(145, 146);
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
 
@@ -68,7 +68,7 @@
       counter++;
      }, this);
 
-    player = game.add.sprite(20, 200, 'hero');
+    player = game.add.sprite((7 * tile) - 16, 200, 'hero');
     player.frame = FRAME_R;
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     player.animations.add('jump', [26, 27, 28, 29, 30, 31, 32], 10, true);
@@ -122,7 +122,10 @@
     game.physics.arcade.collide(skeletons, layer);
     game.physics.arcade.overlap(arrows, layer, killShot, null, this);
     game.physics.arcade.overlap(arrows, ladyPirates, killNpc, null, this);
+    game.physics.arcade.overlap(arrows, skeletons, killNpc, null, this);
     game.physics.arcade.overlap(player, coins, collectCoin, null, this);
+    game.physics.arcade.overlap(player, ladyPirates, playerDies, null, this);
+    game.physics.arcade.overlap(player, skeletons, playerDies, null, this);
 
     // save off sprite frame representing direction of travel
     if(parseInt(player.body.velocity.x) !== 0){
@@ -148,8 +151,15 @@
     // make all pirates jump
     ladyPirates.forEachAlive(function(lp){
       if(lp.body.onFloor()){
-        lp.animations.play('jump');
+        lp.animations.play('fly');
         lp.body.velocity.y = -400;
+      }
+    }, this);
+    // make skeletons jump
+    skeletons.forEachAlive(function(sk){
+      if(sk.body.onFloor()){
+        sk.animations.play('fly');
+        sk.body.velocity.y = -400;
       }
     }, this);
     // make all skeletons walk
@@ -192,7 +202,7 @@
     // check if player fell into ocean
     var screenHeight = 480;
     if(player.y >= screenHeight - (tile * 3)){
-      // game.state.restart();
+      gameOver();
     }
   }
 
@@ -247,6 +257,15 @@
 
   function updateText(){
     scoreText.setText("Score: " +score);
+  }
+
+  function playerDies(player, npc){
+    player.kill();
+    gameOver();
+  }
+
+  function gameOver(){
+    game.state.restart();
   }
 
 })();
