@@ -12,7 +12,8 @@
     map.addTilesetImage('cloud1', 'cloud1');
     map.addTilesetImage('boatWater2', 'boat');
     map.setCollisionBetween(1, 18);
-    map.setCollisionBetween(98);
+    map.setCollisionBetween(97, 100);
+    map.setCollisionBetween(145,146);
 
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
