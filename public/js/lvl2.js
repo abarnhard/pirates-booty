@@ -25,9 +25,11 @@
     map.addTilesetImage('worldfinal', 'tiles');
     map.addTilesetImage('treasurechest', 'treasurechest');
     map.addTilesetImage('torch', 'torch');
-    map.setCollisionBetween(1, 66);
-    map.setCollisionBetween(100, 110);
+    map.setCollisionBetween(1, 44);
+    map.setCollisionBetween(51, 66);
     map.setCollisionBetween(75, 78);
+    map.setCollisionBetween(100, 110);
+
 
     layer = map.createLayer('Tile Layer 1');
     layer.resizeWorld();
@@ -229,13 +231,14 @@
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
       player.destroy();
       theme_2.stop();
+      beatGame.play();
       game.world.setBounds(0, 0, 0, 0);
       game.state.start('won');
     }
-    // check if player fell into ocean
+    // check if player fell into lava
     var screenHeight = 480;
-    if(player.y >= screenHeight - (tile * 3)){
-      // gameOver();
+    if(player.y >= screenHeight - tile){
+      gameOver();
     }
   }
 
