@@ -110,6 +110,7 @@
     }
 
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
+      game.world.setBounds(0, 0, 0, 0);
       game.state.start('lvl2');
     }
     var screenHeight = 480;
