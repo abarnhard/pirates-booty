@@ -4,10 +4,22 @@
   var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame;
   var FRAME_L = 117, FRAME_R = 143;
   var skPath = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10], skIndex = 0;
+  // sound vars
+  var jump, bowShoot, getCoin, enemyDeath, death, beatGame, theme_1;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#6686ff';
+
+    // add audio
+    theme_1 = game.add.audio('theme_1');
+    jump = game.add.audio('jump');
+    bowShot = game.add.audio('bowShot');
+    getCoin = game.add.audio('getCoin');
+    enemyDeath = game.add.audio('enemyDeath');
+    death = game.add.audio('death');
+    beatGame = game.add.audio('beatGame');
+
     // make tile map
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
@@ -109,6 +121,8 @@
     isShooting = false;
 
     scoreText = game.add.text(game.camera.x, game.camera.y, 'score: 0', { fontSize: '32px', fill: '#000', align: 'center' });
+    theme_1.volume = 0.4;
+    theme_1.play();
   }
 
   function update(){
@@ -193,6 +207,7 @@
     }
     if(cursors.up.isDown && player.body.onFloor()){
       player.body.velocity.y = -400;
+      jump.play();
     }
     // check if player has made it to the door to lvl2
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
@@ -208,6 +223,7 @@
   }
 
   function collectCoin (player, coin) {
+    getCoin.play();
     coin.kill();
     score += 100;
     scoreText.text = 'Score: ' + score;
@@ -229,6 +245,7 @@
     // console.log('player frame:', player.frame);
     if(cursors.left.isDown || player.frame < FRAME_R && !cursors.right.isDown){
       isShooting = true;
+      bowShot.play();
       player.animations.play('shootLeft');
       shot.frame = 1;
       shot.reset(player.x - offset, player.y - offset);
@@ -236,6 +253,7 @@
       // player is facing right
     }else if(cursors.right.isDown || player.frame >= FRAME_R && !cursors.left.isDown){
       isShooting = true;
+      bowShot.play();
       player.animations.play('shootRight');
       shot.frame = 0;
       shot.reset(player.x + offset, player.y - offset);
@@ -252,6 +270,7 @@
   }
 
   function killNpc(shot, npc){
+    enemyDeath.play();
     shot.kill();
     npc.kill();
   }
@@ -266,6 +285,8 @@
   }
 
   function gameOver(){
+    theme_1.stop();
+    death.play();
     game.world.setBounds(0, 0, 0, 0);
     game.state.start('gameOver');
   }
