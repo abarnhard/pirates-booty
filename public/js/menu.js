@@ -5,6 +5,7 @@
     //game.load.image('background', '/assets/backgrounds/background.png');
     game.load.tilemap('mario', '/assets/backgrounds/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('mario2', '/assets/backgrounds/marioLevel2.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('cave', '/assets/backgrounds/background.png');
     game.load.image('menu', '/assets/backgrounds/PiratesBooty.png');
     game.load.image('tiles', '/assets/backgrounds/worldfinal.png');
     game.load.image('boat', '/assets/backgrounds/boatWater2.png');
