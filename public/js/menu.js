@@ -11,6 +11,8 @@
     game.load.image('cloud1', '/assets/backgrounds/cloud1.png');
     game.load.image('cloud2', '/assets/backgrounds/cloud2.png');
     game.load.image('gameOver', '/assets/backgrounds/gameOver.png');
+    game.load.image('restart', '/assets/backgrounds/restart.png');
+    game.load.image('foundTres', '/assets/backgrounds/foundTreasure.png');
     game.load.image('start', '/assets/skullStart.png');
     //CHARACTERS:
     game.load.spritesheet('hero', 'assets/characters/hero/hero.png', 64, 64, 265);
@@ -24,6 +26,8 @@
   }
 
 var button;
+var restartB;
+var replay;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -31,6 +35,14 @@ var button;
     game.add.sprite(0, 0, 'menu');
     button = game.add.button(game.world.centerX + 280, 275, 'start', startClick, this);
     button.scale.setTo(.5);
+
+    //game.add.sprite(0, 0, 'gameOver');
+    //restartB = game.add.restart(250, 350, 'restart', restartLevel, this);
+
+    //game.add.sprite(0, 0, 'foundTres');
+    //replay = game.add.replay(250, 450, 'replay', startClick, this);
+
+
 
     //game.add.tileSprite(0, 0, 800, 600, 'bg');
     //game.stage.backgroundColor = '#6686ff';
@@ -44,17 +56,19 @@ var button;
     // ******** for testing purposes, DELETE before production **********
     //var text2 = game.add.text(game.world.centerX - 200, game.world.centerY + 100, 'Press ENTER to check out Level 2');
 
-    var enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-    enterKey.onDown.add(start2);
+    //var enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    //enterKey.onDown.add(start2);
     // ******** END test function for level 2 *******
   }
 
-//  function start(){
-  //  game.state.start('lvl1');
-  //}
-
+// **** Main Menu Start function **** ///
     function startClick () {
     this.game.state.start('lvl1');
+  }
+
+// ***** Game Over Restart Game Function ***** /////
+  function restartLevel(){
+    this.game.state.start('lvl1')
   }
 
   // ******** for testing purposes, DELETE before production **********
