@@ -35,7 +35,7 @@
     ladyPirates.setAll('body.bounce.y', 0.1);
     ladyPirates.setAll('body.linearDamping', 1);
 
-    var ladyPiratePosition = [944, 1456, 1776, 2128, 2448, 2896, 3408, 3696, 3984, 4250, 4432, 5232, 5424, 5680, 6320, 6394, 6458, 6608];
+    var ladyPiratePosition = [944, 1456, 1776, 2128, 2448, 2896, 3408, 3696, 3984, 4240, 4432, 5232, 5424, 6320, 6386, 6608];
     var counter=0;
     ladyPirates.forEach(function(ladyPirate){
       ladyPirate.reset(ladyPiratePosition[counter], 0);
