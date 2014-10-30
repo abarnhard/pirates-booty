@@ -1,9 +1,11 @@
 (function(){
   game.state.add('lvl1', {create:create, update:update, render:render});
 
-  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame;
-  var FRAME_L = 117, FRAME_R = 143;
-  var skPath = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10], skIndex = 0;
+  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame,
+      FRAME_L = 117,
+      FRAME_R = 143,
+      skPath = [150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150],
+      skIndex = 0;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -14,6 +16,7 @@
     map.addTilesetImage('cloud1', 'cloud1');
     map.addTilesetImage('boatWater2', 'boat');
     map.setCollisionBetween(1, 18);
+    map.setCollisionBetween(75, 77);
     map.setCollisionBetween(97, 100);
     map.setCollisionBetween(145, 146);
     layer = map.createLayer('Tile Layer 1');
@@ -48,8 +51,9 @@
     skeletons.createMultiple(17, 'skeleton');
     skeletons.forEach(function(sk){
       sk.frame = FRAME_L;
-      sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
-      sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
+      sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, false);
+      sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, false);
+      sk.animations.add('walk', [143, 144, 145, 146, 147, 148, 149, 150, 151, 117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
       sk.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
       sk.animations.add('fly', [26, 27, 28, 29, 30, 31, 32], 10, true);
       game.physics.enable(sk, Phaser.Physics.ARCADE);
@@ -65,6 +69,7 @@
     var counter=0;
     skeletons.forEach(function(skeleton){
       skeleton.reset(skeletonPosition[counter], 0);
+      // skeleton.animations.play('walk');
       counter++;
      }, this);
 
@@ -155,28 +160,33 @@
         lp.body.velocity.y = -400;
       }
     }, this);
-    // make skeletons jump
+    /* make skeletons jump
     skeletons.forEachAlive(function(sk){
       if(sk.body.onFloor()){
         sk.animations.play('fly');
         sk.body.velocity.y = -400;
       }
-    }, this);
+    }, this);*/
     // make all skeletons walk
-    /*
-    skIndex = skIndex + 1 > skPath.length ? 0 : skIndex + 1;
+
+
     console.log('skIndex', skIndex);
+    console.log('skPath.length', skPath.length);
+    console.log('skIndex === 0', skIndex === 0);
+    console.log('skIndex === skPath.length - 1', skIndex === skPath.length - 1);
+
     skeletons.forEachAlive(function(sk){
+      sk.body.velocity.x = 0;
       if(skIndex === 0){
-        sk.animations.stop();
         sk.animations.play('right');
-      }else if(skIndex === skPath.length){
-        sk.animations.stop();
+      }
+      if(skIndex === skPath.length - 1){
         sk.animations.play('left');
       }
-      sk.body.velocity.x += skPath[skIndex];
+      sk.body.velocity.x = skPath[skIndex];
     });
-    */
+    skIndex = skIndex + 1 >= skPath.length ? 0 : skIndex + 1;
+
     // check input keys to determine movement
     if(cursors.left.isDown){
       player.body.velocity.x = -250;
@@ -203,7 +213,7 @@
     // check if player fell into ocean
     var screenHeight = 480;
     if(player.y >= screenHeight - (tile * 3)){
-      gameOver();
+      // gameOver();
     }
   }
 
