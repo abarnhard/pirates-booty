@@ -23,7 +23,7 @@
     //Other
     game.load.spritesheet('coin', 'assets/otherAnimations/coin.png', 32, 32);
     game.load.spritesheet('arrow', 'assets/otherAnimations/arrow.png', 32, 32);
-    game.load.image('treasureChest', 'assets/otherAnimations/treasurechest.png', 32, 32);
+    game.load.image('treasurechest', 'assets/otherAnimations/treasurechest.png', 32, 32);
   }
 
 var button;
@@ -36,6 +36,8 @@ var button;
     button = game.add.button(game.world.centerX + 280, 275, 'start', startClick, this);
     button.scale.setTo(.5);
 
+    var enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    enterKey.onDown.add(start2);
   }
 
 // **** Main Menu Start function **** ///
@@ -43,5 +45,10 @@ var button;
     this.game.state.start('lvl1');
   }
 
+  // ******** for testing purposes, DELETE before production **********
+  function start2(){
+    game.state.start('lvl2');
+  }
+  // ******** END test function for level 2 *******
 
 })();
