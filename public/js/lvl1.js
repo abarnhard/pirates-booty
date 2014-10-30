@@ -127,6 +127,7 @@
 
     scoreText = game.add.text(game.camera.x, game.camera.y, 'score: 0', { fontSize: '32px', fill: '#000', align: 'center' });
     theme_1.volume = 0.4;
+    theme_1.loop = true;
     theme_1.play();
   }
 
@@ -223,6 +224,7 @@
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
       player.destroy();
       game.world.setBounds(0, 0, 0, 0);
+      theme_1.stop();
       game.state.start('lvl2');
     }
     // check if player fell into ocean
