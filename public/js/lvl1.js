@@ -1,7 +1,7 @@
 (function(){
   game.state.add('lvl1', {create:create, update:update, render:render});
 
-  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText;
+  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -76,12 +76,13 @@
 
 
     player = game.add.sprite(20, 200, 'hero');
-    player.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
-    player.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
+    player.frame = 117;
     player.animations.add('still', [130, 131, 132, 133, 134, 135, 136, 137, 138], 10, true);
     player.animations.add('jump', [26, 27, 28, 29, 30, 31, 32], 10, true);
     var shootL = player.animations.add('shootLeft', [221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233], 50, false),
-        shootR = player.animations.add('shootRight', [247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259], 50, false);
+        shootR = player.animations.add('shootRight', [247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259], 50, false),
+        walkL  = player.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true),
+        walkR  = player.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
     shootL.onComplete.add(resetShot);
     shootR.onComplete.add(resetShot);
 
@@ -116,11 +117,11 @@
   }
 
   function update(){
-    scoreText.x=game.camera.x;
-    scoreText.y=game.camera.y;
-
+    // set score x & y
+    scoreText.x = game.camera.x;
+    scoreText.y = game.camera.y;
+    // init collisions and overlaps
     game.physics.arcade.collide(player, layer);
-    player.body.velocity.x = 0;
     game.physics.arcade.collide(coins, layer);
     game.physics.arcade.collide(ladyPirates, layer);
     game.physics.arcade.collide(skeletons, layer);
@@ -128,13 +129,27 @@
     game.physics.arcade.overlap(arrows, ladyPirates, killNpc, null, this);
     game.physics.arcade.overlap(player, coins, collectCoin, null, this);
 
+    // save off sprite frame representing direction of travel
+    if(parseInt(player.body.velocity.x) !== 0){
+      // console.log('Player x velocity:', parseInt(player.body.velocity.x))
+      if(parseInt(player.body.velocity.x) < 0){
+        pFrame = 117;
+      }else{
+        pFrame = 143;
+      }
+      // console.log('pFrame:', pFrame);
+    }
+
+    // stop player
+    player.body.velocity.x = 0;
+    // kill arrows if they are more than 600px away from the player
     arrows.forEachAlive(function(shot){
       distanceFromPlayer = 600;
       if(Math.abs(player.x - shot.x) >= distanceFromPlayer){
         shot.kill();
       }
     }, this);
-
+    // check input keys to determine movement
     if(cursors.left.isDown){
       player.body.velocity.x = -250;
       if(!isShooting){player.animations.play('left');}
@@ -145,17 +160,18 @@
       player.body.velocity.x = 0;
       if(!isShooting){
         player.animations.stop();
-        player.frame = 130;
+        player.frame = pFrame;
       }
     }
     if(cursors.up.isDown && player.body.onFloor()){
       player.body.velocity.y = -400;
     }
-
+    // check if player has made it to the door to lvl2
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
       player.destroy();
       game.state.start('lvl2');
     }
+    // check if player fell into ocean
     var screenHeight = 480;
     if(player.y >= screenHeight - (tile * 3)){
       // game.state.restart();
@@ -177,13 +193,19 @@
     var shot = arrows.getFirstDead(),
         offset = 15;
     if(!shot){return;}
-    if(cursors.left.isDown){
+    // player facing left, 143 is the first frame of facing right
+    // the first frame of facing left is 117
+    console.log('left cursor is down:', cursors.left.isDown);
+    console.log('right cursor is down:', cursors.right.isDown);
+    console.log('player frame:', player.frame);
+    if(cursors.left.isDown || player.frame < 143 && !cursors.right.isDown){
       isShooting = true;
       player.animations.play('shootLeft');
       shot.frame = 1;
       shot.reset(player.x - offset, player.y - offset);
       shot.body.velocity.x = -350;
-    }else if(cursors.right.isDown){
+      // player is facing right
+    }else if(cursors.right.isDown || player.frame >= 143 && !cursors.left.isDown){
       isShooting = true;
       player.animations.play('shootRight');
       shot.frame = 0;
