@@ -230,7 +230,7 @@
       player.destroy();
       theme_2.stop();
       game.world.setBounds(0, 0, 0, 0);
-      game.state.start('lvl2');
+      game.state.start('won');
     }
     // check if player fell into ocean
     var screenHeight = 480;
