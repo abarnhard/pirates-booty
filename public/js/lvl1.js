@@ -100,10 +100,12 @@
 
     coins = game.add.group();
     coins.enableBody = true;
-    for(var i = 0; i < 12; i++){
+    for(var i = 0; i < 120; i++){
       var coin = coins.create(i * 100, 0, 'coin');
       coin.body.gravity.y = 450;
       coin.body.bounce.y = 0.7 + Math.random() * 0.2;
+      coin.animations.add('turn');
+      coin.animations.play('turn', 5, true);
     }
 
     arrows = game.add.group();
