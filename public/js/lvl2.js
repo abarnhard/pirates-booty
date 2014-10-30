@@ -22,7 +22,7 @@
     map = game.add.tilemap('mario2');
     map.addTilesetImage('worldfinal', 'tiles');
     map.addTilesetImage('treasurechest', 'treasurechest');
-    map.setCollisionBetween(1, 65);
+    map.setCollisionBetween(1, 66);
     map.setCollisionBetween(100, 110);
     map.setCollisionBetween(75, 78);
 
@@ -238,7 +238,7 @@
   }
 
   function render(){
-    game.debug.body(player);
+//    game.debug.body(player);
     game.debug.body(layer);
   }
 
