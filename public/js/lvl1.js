@@ -1,19 +1,34 @@
 (function(){
   game.state.add('lvl1', {create:create, update:update, render:render});
 
-  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame;
-  var FRAME_L = 117, FRAME_R = 143;
-  var skPath = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10, -10], skIndex = 0;
+  var map, layer, player, cursors, spaceKey, arrows, ladyPirate, isShooting, tile = 32, score = 0, scoreText, pFrame,
+      FRAME_L = 117,
+      FRAME_R = 143,
+      skPath = [150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150, -150],
+      skIndex = 0;
+  // sound vars
+  var jump, bowShoot, getCoin, enemyDeath, death, beatGame, theme_1;
 
   function create(){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#6686ff';
+
+    // add audio
+    theme_1 = game.add.audio('theme_1');
+    jump = game.add.audio('jump');
+    bowShot = game.add.audio('bowShot');
+    getCoin = game.add.audio('getCoin');
+    enemyDeath = game.add.audio('enemyDeath');
+    death = game.add.audio('death');
+    beatGame = game.add.audio('beatGame');
+
     // make tile map
     map = game.add.tilemap('mario');
     map.addTilesetImage('worldfinal', 'tiles');
     map.addTilesetImage('cloud1', 'cloud1');
     map.addTilesetImage('boatWater2', 'boat');
     map.setCollisionBetween(1, 18);
+    map.setCollisionBetween(75, 77);
     map.setCollisionBetween(97, 100);
     map.setCollisionBetween(145, 146);
     
@@ -49,8 +64,9 @@
     skeletons.createMultiple(17, 'skeleton');
     skeletons.forEach(function(sk){
       sk.frame = FRAME_L;
-      sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
-      sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, true);
+      sk.animations.add('left', [117, 118, 119, 120, 121, 122, 123, 124, 125], 10, false);
+      sk.animations.add('right', [143, 144, 145, 146, 147, 148, 149, 150, 151], 10, false);
+      sk.animations.add('walk', [143, 144, 145, 146, 147, 148, 149, 150, 151, 117, 118, 119, 120, 121, 122, 123, 124, 125], 10, true);
       sk.animations.add('jump', [13, 14, 15, 16, 17, 18, 19], 20, false);
       sk.animations.add('fly', [26, 27, 28, 29, 30, 31, 32], 10, true);
       game.physics.enable(sk, Phaser.Physics.ARCADE);
@@ -66,6 +82,7 @@
     var counter=0;
     skeletons.forEach(function(skeleton){
       skeleton.reset(skeletonPosition[counter], 0);
+      // skeleton.animations.play('walk');
       counter++;
      }, this);
 
@@ -110,6 +127,9 @@
     isShooting = false;
 
     scoreText = game.add.text(game.camera.x, game.camera.y, 'score: 0', { fontSize: '32px', fill: '#000', align: 'center' });
+    theme_1.volume = 0.4;
+    theme_1.loop = true;
+    theme_1.play();
   }
 
   function update(){
@@ -156,28 +176,33 @@
         lp.body.velocity.y = -400;
       }
     }, this);
-    // make skeletons jump
+    /* make skeletons jump
     skeletons.forEachAlive(function(sk){
       if(sk.body.onFloor()){
         sk.animations.play('fly');
         sk.body.velocity.y = -400;
       }
-    }, this);
+    }, this);*/
     // make all skeletons walk
-    /*
-    skIndex = skIndex + 1 > skPath.length ? 0 : skIndex + 1;
+
+
     console.log('skIndex', skIndex);
+    console.log('skPath.length', skPath.length);
+    console.log('skIndex === 0', skIndex === 0);
+    console.log('skIndex === skPath.length - 1', skIndex === skPath.length - 1);
+
     skeletons.forEachAlive(function(sk){
+      sk.body.velocity.x = 0;
       if(skIndex === 0){
-        sk.animations.stop();
         sk.animations.play('right');
-      }else if(skIndex === skPath.length){
-        sk.animations.stop();
+      }
+      if(skIndex === skPath.length - 1){
         sk.animations.play('left');
       }
-      sk.body.velocity.x += skPath[skIndex];
+      sk.body.velocity.x = skPath[skIndex];
     });
-    */
+    skIndex = skIndex + 1 >= skPath.length ? 0 : skIndex + 1;
+
     // check input keys to determine movement
     if(cursors.left.isDown){
       player.body.velocity.x = -250;
@@ -194,21 +219,24 @@
     }
     if(cursors.up.isDown && player.body.onFloor()){
       player.body.velocity.y = -400;
+      jump.play();
     }
     // check if player has made it to the door to lvl2
     if(Math.abs(player.x - (tile * 212)) <= 20 && Math.abs(player.y - (4 * tile)) >= 32){
       player.destroy();
       game.world.setBounds(0, 0, 0, 0);
+      theme_1.stop();
       game.state.start('lvl2');
     }
     // check if player fell into ocean
     var screenHeight = 480;
     if(player.y >= screenHeight - (tile * 3)){
-      gameOver();
+      // gameOver();
     }
   }
 
   function collectCoin (player, coin) {
+    getCoin.play();
     coin.kill();
     score += 100;
     scoreText.text = 'Score: ' + score;
@@ -230,6 +258,7 @@
     // console.log('player frame:', player.frame);
     if(cursors.left.isDown || player.frame < FRAME_R && !cursors.right.isDown){
       isShooting = true;
+      bowShot.play();
       player.animations.play('shootLeft');
       shot.frame = 1;
       shot.reset(player.x - offset, player.y - offset);
@@ -237,6 +266,7 @@
       // player is facing right
     }else if(cursors.right.isDown || player.frame >= FRAME_R && !cursors.left.isDown){
       isShooting = true;
+      bowShot.play();
       player.animations.play('shootRight');
       shot.frame = 0;
       shot.reset(player.x + offset, player.y - offset);
@@ -253,6 +283,7 @@
   }
 
   function killNpc(shot, npc){
+    enemyDeath.play();
     shot.kill();
     npc.kill();
   }
@@ -267,8 +298,10 @@
   }
 
   function gameOver(){
+    theme_1.stop();
+    death.play();
     game.world.setBounds(0, 0, 0, 0);
-    game.state.restart();
+    game.state.start('gameOver');
   }
 
 })();
